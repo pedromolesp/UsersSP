@@ -15,13 +15,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(R.layout.activity_main)
-        userAdapter = UserAdapter(mutableListOf())
+        setContentView(binding.root)
+        userAdapter = UserAdapter(getUsers())
         linearLayoutManager = LinearLayoutManager(this)
         binding.recycler.apply {
             layoutManager = linearLayoutManager
             adapter = userAdapter
         }
 
+    }
+
+    private fun getUsers():MutableList<User>{
+        val users = mutableListOf<User>()
+
+        val alain = User(1,"Alain","Nicolás","")
+        val samanta = User(2,"Samanta","Peña","")
+        users.add(alain)
+        users.add(samanta)
+        return users
     }
 }
