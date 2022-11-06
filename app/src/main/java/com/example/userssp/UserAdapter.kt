@@ -13,7 +13,6 @@ class UserAdapter(private val users: List<User>):RecyclerView.Adapter<UserAdapte
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemUserBinding.bind(view)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
