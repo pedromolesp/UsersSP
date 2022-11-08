@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
     android:layout_height="@dimen/card_height">
 <ImageView
     android:id="@+id/imgPhoto"
-
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -14,7 +16,6 @@
     android:layout_margin="8dp"
     android:layout_width="@dimen/card_image_size"
     android:layout_height="@dimen/card_image_size"
-
     />
     <TextView
         android:id="@+id/tvOrder"
