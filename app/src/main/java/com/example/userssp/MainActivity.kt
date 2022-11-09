@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userssp.databinding.ActivityMainBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity(), OnClickListener {
     private lateinit var userAdapter: UserAdapter
@@ -23,7 +24,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val preferences = getPreferences(Context.MODE_PRIVATE)
         val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i("SP", "${getString(R.string.sp_first_time)} = $isFirstTime")
-        preferences.edit().putBoolean(getString(R.string.sp_first_time), false).commit()
+        if (isFirstTime) {
+            MaterialAlertDialogBuilder(this).setTitle(R.string.dialog_title)
+                .setPositiveButton(R.string.dialog_confirm,
+                    { dialogInterface, i ->
+                        preferences.edit().putBoolean(getString(R.string.sp_first_time), false)
+                            .commit()
+
+                    }).setNegativeButton("No", null)
+                .show()
+        }
         userAdapter = UserAdapter(getUsers(), this)
         linearLayoutManager = LinearLayoutManager(this)
         binding.recycler.apply {
@@ -71,7 +81,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         return users
     }
 
-    override fun onClick(user: User, position:Int) {
-        Toast.makeText(this,"${position}: ${user.getFullName()}", Toast.LENGTH_SHORT).show()
+    override fun onClick(user: User, position: Int) {
+        Toast.makeText(this, "${position}: ${user.getFullName()}", Toast.LENGTH_SHORT).show()
     }
 }
