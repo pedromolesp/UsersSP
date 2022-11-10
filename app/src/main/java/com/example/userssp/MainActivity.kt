@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.userssp.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity(), OnClickListener {
     private lateinit var userAdapter: UserAdapter
@@ -25,14 +26,24 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val isFirstTime = preferences.getBoolean(getString(R.string.sp_first_time), true)
         Log.i("SP", "${getString(R.string.sp_first_time)} = $isFirstTime")
         if (isFirstTime) {
-            MaterialAlertDialogBuilder(this).setTitle(R.string.dialog_title)
+            val dialogView=layoutInflater.inflate(R.layout.dialog_register, null)
+            MaterialAlertDialogBuilder(this).setTitle(R.string.dialog_title).setView(dialogView)
                 .setPositiveButton(R.string.dialog_confirm,
                     { dialogInterface, i ->
+                        val username = dialogView.findViewById<TextInputEditText>(R.id.etUsername).text.toString()
+
+                        with(preferences.edit()){
+                            putBoolean(getString(R.string.sp_first_time), false).putString(getString(R.string.sp_username),
+                                username
+                            ).apply()
+                        }
                         preferences.edit().putBoolean(getString(R.string.sp_first_time), false)
                             .commit()
 
-                    }).setNegativeButton("No", null)
+                    }).setCancelable(false)
                 .show()
+        }else{
+
         }
         userAdapter = UserAdapter(getUsers(), this)
         linearLayoutManager = LinearLayoutManager(this)
