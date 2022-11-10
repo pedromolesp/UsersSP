@@ -37,12 +37,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                                 username
                             ).apply()
                         }
-                        preferences.edit().putBoolean(getString(R.string.sp_first_time), false)
-                            .commit()
+                        Toast.makeText(this,R.string.register_success, Toast.LENGTH_SHORT).show()
+
 
                     }).setCancelable(false)
                 .show()
         }else{
+            val username = preferences.getString(getString(R.string.sp_username),getString(R.string.sp_first_time))
+            Toast.makeText(this,"Bienvenido mamahuevo $username", Toast.LENGTH_SHORT).show()
 
         }
         userAdapter = UserAdapter(getUsers(), this)
